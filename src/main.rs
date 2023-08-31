@@ -4,7 +4,6 @@ use rust_full_stack::application::{add::add_employee, menu::display_menu, print:
 use std::{collections::HashMap, io};
 
 // database imports
-use mongodb::Client;
 use rust_full_stack::mongodb::connect::{check_database, list_databases};
 use tokio;
 
@@ -42,7 +41,7 @@ async fn main() {
                 }
                 'l' => { // hidden menu for admin purposes
                     clear().expect("Failed to clear the screen at list databases");
-                    list_databases(&client).await.unwrap();
+                    let _ = list_databases(&client).await;
                 }
 
                 'q' => {
