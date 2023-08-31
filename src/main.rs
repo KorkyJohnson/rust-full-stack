@@ -1,12 +1,26 @@
+// application imports
 use clearscreen::{self, clear};
-use std::{io, collections::HashMap};
-use rust_full_stack::application::{menu::display_menu, print::print_employees, add::add_employee};
+use rust_full_stack::application::{add::add_employee, menu::display_menu, print::print_employees};
+use std::{collections::HashMap, io};
 
-fn main() {
+// database imports
+use mongodb::Client;
+use rust_full_stack::mongodb::connect::{check_database, list_databases};
+use tokio;
 
+#[tokio::main]
+async fn main() {
     let mut employee_database: HashMap<String, String> = HashMap::new();
     clear().expect("Failed to clear the screen at main");
     display_menu();
+
+    let client = match check_database().await {
+        Ok(client) => client,
+        Err(err) => {
+            eprintln!("Error while checking database: {}", err);
+            return;
+        }
+    };
 
     loop {
         let mut user_input = String::new();
@@ -26,6 +40,11 @@ fn main() {
                     clear().expect("Failed to clear the screen at display menu");
                     display_menu();
                 }
+                'l' => { // hidden menu for admin purposes
+                    clear().expect("Failed to clear the screen at list databases");
+                    list_databases(&client).await.unwrap();
+                }
+
                 'q' => {
                     println!("Goodbye :)");
                     break;
@@ -37,4 +56,3 @@ fn main() {
         }
     }
 }
-

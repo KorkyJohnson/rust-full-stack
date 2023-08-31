@@ -6,10 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# application layer
 regex = "1.9.3" # for Regex
 clearscreen = "2.0.1" # to clear the terminal screen
-mongodb = "2.6.1"
-bson = { version = "2", features = ["chrono-0_4"] } # Needed for using chrono datetime in doc
-tokio = "1"
-chrono = "0.4" # Used for setting DateTimes
-serde = "1" # Used in the Map Data into Structs section
+
+# data layer
+mongodb = "2.6.1" # mongodb 
+tokio = "1" # for async
+serde = {version="1", features=["derive"]}  # Used in the Map Data into Structs section (Serialize/Deserialize)
+futures = "0.3" # for query trys

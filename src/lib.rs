@@ -3,3 +3,7 @@ pub mod application {
     pub mod print;
     pub mod add;
 }
+
+pub mod mongodb {
+    pub mod connect;
+}
