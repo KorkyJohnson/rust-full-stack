@@ -9,6 +9,7 @@ use rust_full_stack::database::{
     admin::{list_collections, list_databases},
     connect::check_database,
     print::print_database,
+    delete::delete_employee,
 };
 use tokio;
 
@@ -41,6 +42,11 @@ async fn main() {
                 'p' => {
                     if let Err(err) = print_database(&client).await {
                         eprint!("Error while printing records {}", err)
+                    }
+                }
+                'd' => {
+                    if let Err(err) = delete_employee(&client).await {
+                        eprint!("Error while deleting an employee {}", err)
                     }
                 }
                 'm' => {

@@ -15,7 +15,7 @@ pub async fn insert_document(client: &Client) -> Result<(), mongodb::error::Erro
         phone: None,
     };
 
-    println!("Please enter employee name:");
+    println!("Please enter employee name to add:");
     io::stdin()
         .read_line(&mut employee.name)
         .expect("You didn't enter an employee name");

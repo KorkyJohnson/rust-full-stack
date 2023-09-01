@@ -4,11 +4,12 @@ use futures::TryStreamExt;
 use mongodb::{bson::doc, options::FindOptions, Client};
 
 pub async fn print_database(client: &Client) -> Result<(), mongodb::error::Error> {
-    clear().expect("Failed to clear the screen at add employee");
+    clear().expect("Failed to clear the screen at print employees");
 
     let db = &client.database("Employee");
     let coll = db.collection::<Employee>("employees");
 
+    // print all in collection, sort by name
     let find_options = FindOptions::builder().sort(doc! {"name": 1}).build();
     let employees: Vec<Employee> = coll
         .find(None, find_options)
