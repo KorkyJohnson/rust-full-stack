@@ -4,6 +4,8 @@ pub mod application {
     pub mod add;
 }
 
-pub mod mongodb {
+pub mod database {
     pub mod connect;
+    pub mod employee;
+    pub mod add_employee;
 }

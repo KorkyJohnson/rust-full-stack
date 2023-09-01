@@ -1,10 +1,13 @@
 // application imports
 use clearscreen::{self, clear};
-use rust_full_stack::application::{add::add_employee, menu::display_menu, print::print_employees};
+use rust_full_stack::{
+    application::{menu::display_menu, print::print_employees},
+    database::connect::list_collections,
+};
 use std::{collections::HashMap, io};
 
 // database imports
-use rust_full_stack::mongodb::connect::{check_database, list_databases};
+use rust_full_stack::database::{connect::check_database, connect::list_databases, add_employee::insert_document};
 use tokio;
 
 #[tokio::main]
@@ -30,7 +33,9 @@ async fn main() {
         if let Some(user_choice) = user_input.trim().chars().next() {
             match user_choice.to_ascii_lowercase() {
                 'a' => {
-                    add_employee(&mut employee_database);
+                    if let Err(err) = insert_document(&client).await {
+                        eprint!("Error while inserting a record {}", err)
+                    }
                 }
                 'p' => {
                     print_employees(&mut employee_database);
@@ -39,9 +44,16 @@ async fn main() {
                     clear().expect("Failed to clear the screen at display menu");
                     display_menu();
                 }
-                'l' => { // hidden menu for admin purposes
+                // hidden menu for admin purposes
+                'l' => {
                     clear().expect("Failed to clear the screen at list databases");
                     let _ = list_databases(&client).await;
+                }
+                'c' => {
+                    let _db_name = "Employee";
+                    let _db = client.database(_db_name); //default db
+                    clear().expect("Failed to clear the screen at list collections");
+                    let _ = list_collections(&_db).await;
                 }
 
                 'q' => {
