@@ -2,7 +2,6 @@ use crate::database::employee::Employee;
 use clearscreen::clear;
 use mongodb::Client;
 use std::io;
-// use serde::{Deserialize, Serialize};
 
 pub async fn insert_document(client: &Client) -> Result<(), mongodb::error::Error> {
     clear().expect("Failed to clear the screen at add employee");
@@ -26,7 +25,7 @@ pub async fn insert_document(client: &Client) -> Result<(), mongodb::error::Erro
     io::stdin()
         .read_line(&mut employee.title)
         .expect("You didn't enter an employee title");
-    employee.title= employee.title.trim().to_string();
+    employee.title = employee.title.trim().to_string();
 
     let doc = vec![employee];
 

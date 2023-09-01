@@ -1,18 +1,19 @@
 // application imports
 use clearscreen::{self, clear};
-use rust_full_stack::{
-    application::{menu::display_menu, print::print_employees},
-    database::connect::list_collections,
-};
-use std::{collections::HashMap, io};
+use rust_full_stack::application::menu::display_menu;
+use std::io;
 
 // database imports
-use rust_full_stack::database::{connect::check_database, connect::list_databases, add_employee::insert_document};
+use rust_full_stack::database::{
+    add::insert_document,
+    admin::{list_collections, list_databases},
+    connect::check_database,
+    print::print_database,
+};
 use tokio;
 
 #[tokio::main]
 async fn main() {
-    let mut employee_database: HashMap<String, String> = HashMap::new();
     clear().expect("Failed to clear the screen at main");
     display_menu();
 
@@ -38,7 +39,9 @@ async fn main() {
                     }
                 }
                 'p' => {
-                    print_employees(&mut employee_database);
+                    if let Err(err) = print_database(&client).await {
+                        eprint!("Error while printing records {}", err)
+                    }
                 }
                 'm' => {
                     clear().expect("Failed to clear the screen at display menu");
