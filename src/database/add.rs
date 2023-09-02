@@ -3,7 +3,7 @@ use clearscreen::clear;
 use mongodb::Client;
 use std::io;
 
-pub async fn insert_document(client: &Client) -> Result<(), mongodb::error::Error> {
+pub async fn add_employee(client: &Client) -> Result<(), mongodb::error::Error> {
     clear().expect("Failed to clear the screen at add employee");
 
     let db = &client.database("Employee");

@@ -6,6 +6,7 @@ pub fn display_menu() {
     println!("*                                                      *");
     println!("*              (A)dd a employee                        *");
     println!("*              (D)elete an employee                    *");
+    println!("*              (S)earch for an employee                *");
     println!("*              (P)rint all employees                   *");
     println!("*              Display this (M)enu                     *");
     println!("*              (Q)uit program                          *");

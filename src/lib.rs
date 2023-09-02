@@ -7,6 +7,7 @@ pub mod database {
     pub mod connect;
     pub mod employee;
     pub mod add;
-    pub mod print;
     pub mod delete;
+    pub mod search;
+    pub mod print;
 }

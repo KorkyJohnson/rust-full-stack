@@ -5,11 +5,12 @@ use std::io;
 
 // database imports
 use rust_full_stack::database::{
-    add::insert_document,
+    add::add_employee,
     admin::{list_collections, list_databases},
     connect::check_database,
     print::print_database,
     delete::delete_employee,
+    search::search_employees,
 };
 use tokio;
 
@@ -35,18 +36,23 @@ async fn main() {
         if let Some(user_choice) = user_input.trim().chars().next() {
             match user_choice.to_ascii_lowercase() {
                 'a' => {
-                    if let Err(err) = insert_document(&client).await {
+                    if let Err(err) = add_employee(&client).await {
                         eprint!("Error while inserting a record {}", err)
-                    }
-                }
-                'p' => {
-                    if let Err(err) = print_database(&client).await {
-                        eprint!("Error while printing records {}", err)
                     }
                 }
                 'd' => {
                     if let Err(err) = delete_employee(&client).await {
                         eprint!("Error while deleting an employee {}", err)
+                    }
+                }
+                's' => {
+                    if let Err(err) = search_employees(&client).await {
+                        eprint!("Error while searching records {}", err)
+                    }
+                }
+                'p' => {
+                    if let Err(err) = print_database(&client).await {
+                        eprint!("Error while printing records {}", err)
                     }
                 }
                 'm' => {
